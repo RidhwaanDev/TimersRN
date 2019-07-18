@@ -6,16 +6,20 @@ export default class Timer extends React.Component {
     constructor(props) {
         super(props);
         this.onPress = this.onPress.bind(this);
-        this.onReset= this.onReset.bind(this);
+        this.onReset = this.onReset.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     onPress(){
         const {id, onPress} = this.props;
-        onPress({id,onPress});
+        onPress({id,reset:false});
     }
     onReset(){
-        const {id,onReset } = this.props;
-        onPress({id,onReset});
+        const {id,onPress} = this.props;
+        onPress({id, reset:true});
+    }
+    onDelete(){
+       console.warn("deleting") ;
     }
     render() {
       const { title , id , elapsed , isRunning , onPress }  = this.props;
@@ -27,7 +31,8 @@ export default class Timer extends React.Component {
               <Text style={styles.intervalText}> will beep every 5 minutes </Text>
               { !isRunning &&  <TimerButton color= {colors.greenStart} title="Start" onPress={this.onPress} /> }
               { isRunning &&  <TimerButton color= {colors.redStop} title="Stop" onPress={this.onPress} /> }
-              <TimerButton color={colors.orangeReset} title="Reset" />
+              <TimerButton color={colors.orangeReset} title="Reset" onPress ={this.onReset} />
+              <TimerButton color={colors.redDelete} title="Delete" onPress ={this.onDelete} />
           </View>
       )
    }
@@ -36,7 +41,8 @@ export default class Timer extends React.Component {
 const colors = {
     greenStart :"#30d2a4",
     redStop : "#d0879e",
-    orangeReset: "#dd9449"
+    orangeReset: "#dd9449",
+    redDelete : 'red',
 };
 
 const styles = StyleSheet.create({

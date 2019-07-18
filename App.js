@@ -47,7 +47,7 @@ export default class App extends React.Component {
     newTimer = (timer = {}) => {
         const { timers} = this.state;
         return {
-            title : `Timer ${timers.length}` || timer.title,
+            title : timer.title,
             id: uuidv4(),
             time: new Timer(),
             elapsed : '00:00:00',
@@ -60,7 +60,17 @@ export default class App extends React.Component {
         let index = 0;
         for(let i = 0; i < timers.length; i++){
             if(timers[i].id === data.id){
-                index = i;
+                if(data.reset){
+                    // if is to be reset, then create new instance of timer
+                    const timerToUpdate = [...this.state.timers];
+                    timerToUpdate[i].time = new Timer();
+                    timerToUpdate[i].elapsed = "00:00:00";
+                    this.setState({timers : timerToUpdate});
+                    return;
+                } else {
+                    index = i;
+                }
+
             }
         }
         if(index < 0) {
