@@ -8,11 +8,9 @@ export default function IntervalButton({title,
         <TouchableOpacity
             style={ styles.button }
             onPress={onPress} >
-
             <Text style={[ styles.buttonText, small ? styles.small : styles.large, ]} >
                 {title}
             </Text>
-
         </TouchableOpacity>
 ); }
 const styles = StyleSheet.create({

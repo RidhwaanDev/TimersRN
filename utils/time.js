@@ -12,6 +12,14 @@ Timer.prototype.value = function(){
      return moment().hour(0).minutes(0).second(this.step).format('HH:mm:ss');
 };
 
+Timer.prototype.idToNum = function(id){
+    let sum = 0;
+    for(let i = 0; i < id.length; i++){
+       sum += id.charCodeAt(i);
+    }
+    return sum;
+};
+
 module.exports = Timer;
 
 // export function getTime(){

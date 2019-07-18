@@ -19,11 +19,11 @@ export default class EditableTimer extends React.Component
         return (
             <Timer
                 id = {id}
-                title = {title}
-                project = {project}
-                elapsed = {elapsed}
+                title =     {title}
+                project =   {project}
+                elapsed =   {elapsed}
                 isRunning = {isRunning}
-                onPress = {onPress}
+                onPress =   {onPress}
             />
         );
     }

@@ -10,7 +10,7 @@ export default function TimerButton({   color,
     <TouchableOpacity
         style={[styles.button, {backgroundColor : color}, isAdd && styles.round]}
         onPress={onPress} >
-        <Text style= {[ styles.buttonText, small ? styles.small : styles.large, { color : 'white'}, ]} >
+        <Text style = {[ styles.buttonText, small ? styles.small : styles.large, { color : 'white'}, ]} >
             {title}
         </Text>
     </TouchableOpacity>

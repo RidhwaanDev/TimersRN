@@ -7,15 +7,17 @@ import ToggleableTimerForm from './components/ToggleableTimerForm'
 import uuidv4 from 'uuid/v4'
 import Timer from './utils/time'
 
-
 export default class App extends React.Component {
     // state of timers. start of with two
+    constructor(props){
+        super(props);
+        this.handleStartStop = this.handleStartStop.bind(this);
+    }
     state = {
-        timerCount : 2,
+        timerCount : 0,
         timers: [
             {
                 title : 'Timer 1',
-                project : 'Timers',
                 id : uuidv4(),
                 time : new Timer(),
                 elapsed : '00:00:00',
@@ -36,7 +38,6 @@ export default class App extends React.Component {
             this.setState({
                 timers : timers.map(timer => {
                     const {isRunning, elapsed , time } = timer;
-
                     return{...timer , elapsed : isRunning ? time.tick() : elapsed}
                 }),
             });
@@ -44,10 +45,9 @@ export default class App extends React.Component {
     }
 
     newTimer = (timer = {}) => {
-        const {timerCount, timers} = this.state;
-        this.setState({timerCount : timerCount + 1,...timers});
+        const { timers} = this.state;
         return {
-            title : `Timer ${timerCount}` || timer.title,
+            title : `Timer ${timers.length}` || timer.title,
             id: uuidv4(),
             time: new Timer(),
             elapsed : '00:00:00',
@@ -55,22 +55,20 @@ export default class App extends React.Component {
         };
     };
 
-    handleStartStop = (id ) => {
+    handleStartStop (data)  {
         const {timers} = this.state;
-        // use classic for loop cuz faster.
         let index = 0;
         for(let i = 0; i < timers.length; i++){
-            if(timers[i].id === id){
+            if(timers[i].id === data.id){
                 index = i;
             }
         }
-
         if(index < 0) {
             console.warn("index is -1 for some reason");
             return;
         }
 
-        const timerToUpdate = [...this.state.timers] ;
+        const timerToUpdate = [...this.state.timers];
         // switch boolean value
         timerToUpdate[index].isRunning  = !timerToUpdate[index].isRunning;
         this.setState({timers : timerToUpdate});
@@ -102,7 +100,7 @@ export default class App extends React.Component {
                                 project={project}
                                 elapsed={elapsed}
                                 isRunning={isRunning}
-                                onPress = {(id) => this.handleStartStop}
+                                onPress = {this.handleStartStop}
                             />
                         ),)
                     }

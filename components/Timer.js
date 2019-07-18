@@ -2,17 +2,42 @@ import React from 'react';
 import { PanResponder, StyleSheet, View, Text, Picker } from 'react-native';
 // import { millisecondsToHuman } from '../utils/TimerUtils';
 import TimerButton from './TimerButton';
-export default function Timer({ title, id, elapsed,isRunning, onPress}) {
-    const elapsedString = '3:45 seconds';
-    return (
-        <View style={styles.timerContainer}>
-            <Text style={styles.title}> {title} </Text>
-            <Text style={styles.elapsedTime}>{elapsed}</Text>
-            <Text style={styles.intervalText}> will vibrate every 5 minutes </Text>
-            <TimerButton color="#30d2a4" title="Start" onPress={onPress(id)}/>
-            <TimerButton color="#d0879e" title="Stop" onPress={onPress(id)}/>
-        </View>
-    ); }
+export default class Timer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.onPress = this.onPress.bind(this);
+        this.onReset= this.onReset.bind(this);
+    }
+
+    onPress(){
+        const {id, onPress} = this.props;
+        onPress({id,onPress});
+    }
+    onReset(){
+        const {id,onReset } = this.props;
+        onPress({id,onReset});
+    }
+    render() {
+      const { title , id , elapsed , isRunning , onPress }  = this.props;
+      return(
+          <View style={styles.timerContainer}>
+
+              <Text style={styles.title}> {title} </Text>
+              <Text style={styles.elapsedTime}>{elapsed}</Text>
+              <Text style={styles.intervalText}> will beep every 5 minutes </Text>
+              { !isRunning &&  <TimerButton color= {colors.greenStart} title="Start" onPress={this.onPress} /> }
+              { isRunning &&  <TimerButton color= {colors.redStop} title="Stop" onPress={this.onPress} /> }
+              <TimerButton color={colors.orangeReset} title="Reset" />
+          </View>
+      )
+   }
+}
+
+const colors = {
+    greenStart :"#30d2a4",
+    redStop : "#d0879e",
+    orangeReset: "#dd9449"
+};
 
 const styles = StyleSheet.create({
     intervalText : {
