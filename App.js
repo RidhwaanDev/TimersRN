@@ -60,14 +60,22 @@ export default class App extends React.Component {
         let index = 0;
         for(let i = 0; i < timers.length; i++){
             if(timers[i].id === data.id){
-                if(data.reset){
-                    // if is to be reset, then create new instance of timer
+                if(data.reset === 'delete'){
+                    // delete the timer
+                    const allTimers = [...this.state.timers];
+                    allTimers.splice(i, 1);
+                    this.setState({timers: allTimers});
+                    return;
+                }
+                else if(data.reset){
+                    // reset the timer
                     const timerToUpdate = [...this.state.timers];
                     timerToUpdate[i].time = new Timer();
                     timerToUpdate[i].elapsed = "00:00:00";
                     this.setState({timers : timerToUpdate});
                     return;
                 } else {
+                    // start/stop the timer
                     index = i;
                 }
 

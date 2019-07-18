@@ -19,7 +19,8 @@ export default class Timer extends React.Component {
         onPress({id, reset:true});
     }
     onDelete(){
-       console.warn("deleting") ;
+        const {id,onPress} = this.props;
+        onPress({id, reset : 'delete'});
     }
     render() {
       const { title , id , elapsed , isRunning , onPress }  = this.props;
