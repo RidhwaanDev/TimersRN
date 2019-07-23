@@ -1,7 +1,7 @@
 # TimersRN
 
-react-native learning project
+Timer built in React-Native
 
+![Screenshot](https://i.imgur.com/XlVTcdq.png)
 
-![Screenshot](https://i.imgur.com/knyfcsL.png)
 
